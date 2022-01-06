@@ -45,6 +45,7 @@ for name in os.listdir(KNOWN_FACES_DIR):
         known_faces.append(encoding)
         known_names.append(name)
 
+# Test
 print("Verifying Identity....")
 while True:
     ret, image = video.read()
