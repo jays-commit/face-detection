@@ -67,7 +67,7 @@ while True:
             sys.exit()
         else:
             print("Match not found\n User authenitication denied")
-            time.sleep(9)
+            time.sleep(5)
             sys.exit()
 
             # print("processing credentials")
