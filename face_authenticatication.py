@@ -65,6 +65,10 @@ while True:
             print(f"Match Found: {match}")
             print("User Authenticated")
             sys.exit()
+        else:
+            print("Match not found\n User authenitication denied")
+            time.sleep(5)
+            sys.exit()
 
             # print("processing credentials")
             # time.sleep(10)
