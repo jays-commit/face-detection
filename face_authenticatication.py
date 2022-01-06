@@ -7,7 +7,7 @@ import sys
 # test
 KNOWN_FACES_DIR = "known_faces"
 # UNKNOWN_FACES_DIR = "unknown_faces"
-TOLERANCE = 0.7
+TOLERANCE = 0.8
 FRAME_THICKNESS = 3
 FONT_THICKNESS = 2
 MODEL = "hog"
