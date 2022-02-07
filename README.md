@@ -36,3 +36,4 @@ Once you have all of the dependencies and have installed the face_recognition pa
 
 Create a directory called known_faces, which will house directories of known identities. Inside of known_faces, and name it after the identity youll be detecting  and populate it with different pics of said identity. 
 Add a new directory called unknown_faces, which will be populated with pictures you want to make comparisons with.
+
