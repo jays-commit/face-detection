@@ -4,36 +4,26 @@ import cv2
 import time
 import sys
 
-
 KNOWN_FACES_DIR = "known_faces"
-# UNKNOWN_FACES_DIR = "unknown_faces"
 TOLERANCE = 0.8
 FRAME_THICKNESS = 3
 FONT_THICKNESS = 2
 MODEL = "hog"
 
-# username = input("Enter Username")
-# if username == authentication.login:
-#     print("success")
-# else:
-#     print("access denied")
-
-video = cv2.VideoCapture(0)
+video = cv2.VideoCapture("CNC Preview 1.mov")
 
 print("loading known faces....")
 
 known_faces = []
 known_names = []
 
-# for name in os.listdir(KNOWN_FACES_DIR):
-#     for filename in os.listdir(f"{KNOWN_FACES_DIR}/{name}"):
-
-# code above is a simpler way but the ds.store file stops code from working
 for name in os.listdir(KNOWN_FACES_DIR):
     dir_path = os.path.join(KNOWN_FACES_DIR, name)
+
     # if it's a directory
     if os.path.isdir(dir_path):
         for filename in os.listdir(dir_path):
+
             # if the file is a valid file (a better way could be to check your specific extension, e.g., png)
             if not filename.startswith('.'):
                 filepath = os.path.join(dir_path, filename)
@@ -51,14 +41,9 @@ for name in os.listdir(KNOWN_FACES_DIR):
         known_faces.append(encoding)
         known_names.append(name)
 
-
 print("Verifying Identity....")
 while True:
     ret, image = video.read()
-
-    # for filename in os.listdir(UNKNOWN_FACES_DIR):
-    # print(filename)
-    # image = face_recognition.load_image_file(f"{UNKNOWN_FACES_DIR}/{filename}")
 
     # Twe first grab face locations - we'll need them to draw boxes
     locations = face_recognition.face_locations(image, model=MODEL)
@@ -67,8 +52,6 @@ while True:
     # Without that it will search for faces once again slowing down whole process
     encoding = face_recognition.face_encodings(image, locations)
 
-    # image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-
     # we assume that there might be more faces in an image - we can find faces of different people
     for face_encoding, face_locations in zip(encoding, locations):
 
@@ -76,20 +59,17 @@ while True:
         # Returns array of True/False values in order of passed known_faces
         results = face_recognition.compare_faces(known_faces, face_encoding, TOLERANCE)
         match = None
-        if True in results: # If at least one is true, get a name of first of found labels
+        if True in results:  # If at least one is true, get a name of first of found labels
             match = known_names[results.index(True)]
 
-            time.sleep(8)
+            # time.sleep(8)
             print(f"Match Found: {match}")
-            print("User Authenticated")
-            sys.exit()
+            # print("User Authenticated")
+
         else:
             print("Match not found\n User authentication denied")
             time.sleep(5)
             sys.exit()
-
-
-
 
         # Each location contains positions in order: top, right, bottom, left
         top_left = (face_locations[3], face_locations[0])
@@ -99,7 +79,7 @@ while True:
         # Paint frame
         cv2.rectangle(image, top_left, bottom_right, color, FRAME_THICKNESS)
 
-        # Now we need smaller, filled grame below for a name
+        # Now we need smaller, filled gram below for a name
         # This time we use bottom in both corners - to start from bottom and move 50 pixels down
         top_left = (face_locations[3], face_locations[2])
         bottom_right = (face_locations[1], face_locations[2] + 22)
